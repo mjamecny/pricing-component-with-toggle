@@ -1,7 +1,12 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 
 export default function App() {
   const [checked, setChecked] = useState(false)
+  const inputEl = useRef(null)
+
+  function handleToggle(e) {
+    if (e.code === "Enter") setChecked(!checked)
+  }
 
   return (
     <div className="bg-veryLightGrayishBlue xl:h-screen xl:my-auto">
@@ -18,17 +23,25 @@ export default function App() {
       <div className="relative mx-auto max-w-6xl px-1.6 py-4.8 xl:h-screen xl:flex xl:flex-col xl:justify-center z-[20]">
         <div className="flex flex-col gap-3.2">
           <h1 className="text-3 text-grayishBlue text-center">Our pricing</h1>
-          <form className="flex gap-1.6 justify-center">
-            <p className="text-lightGrayishBlue">Annually</p>
-            <label className="switch">
-              <input
-                type="checkbox"
-                checked={checked}
-                onChange={() => setChecked(!checked)}
-              />
-              <span className="slider round"></span>
-            </label>
-            <p className="text-lightGrayishBlue">Monthly</p>
+          <form className="flex flex-col gap-0.8">
+            <div className="flex gap-1.6 justify-center">
+              <p className="text-lightGrayishBlue">Annually</p>
+              <label className="switch">
+                <input
+                  type="checkbox"
+                  checked={checked}
+                  onChange={() => setChecked(!checked)}
+                  autoFocus
+                  ref={inputEl}
+                  onKeyPress={handleToggle}
+                />
+                <span className="slider round"></span>
+              </label>
+              <p className="text-lightGrayishBlue">Monthly</p>
+            </div>
+            <p className="text-1.2 text-center text-lightGrayishBlue">
+              Press Enter to change billing
+            </p>
           </form>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2.4 mt-4.8 xl:gap-[0px] xl:min-h-[550px]">
